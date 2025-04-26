@@ -1,11 +1,15 @@
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+from app.permissions import GlobalDefaultPermission
 from genres.models import Genre
 from genres.serializers import GenreSerializer
 
 
 
+
 # usando class Based Views - Generic Views 
 class GenreCreateListView(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated, GlobalDefaultPermission,) #validação do token jwt
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
 
@@ -27,6 +31,7 @@ class GenreCreateListView(generics.ListCreateAPIView):
 
 
 class GenreRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated, GlobalDefaultPermission) #validação do token jwt
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
 
